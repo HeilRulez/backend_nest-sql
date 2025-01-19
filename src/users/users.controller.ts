@@ -1,12 +1,24 @@
-import { Controller, Get, Post, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/createUser.dto';
+import { ValidationPipe } from '../common/pipes/validation.pipe';
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
   @Post()
-  async createUser() {}
+  async createUser(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
+    this.usersService.create(createUserDto);
+  }
+
+  @Get()
+  async users() {
+    return `Hello`;
+  }
 
   @Get(':id')
-  async getUser(@Param('id') id: string): Promise<user> {
+  async getUser(@Param('id') id: string) {
     return `${id}`;
   }
 }
