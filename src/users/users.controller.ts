@@ -12,11 +12,6 @@ export class UsersController {
     this.usersService.create(createUserDto);
   }
 
-  @Get()
-  async users() {
-    return `Hello`;
-  }
-
   @Get(':id')
   async getUser(@Param('id') id: string) {
     return `${id}`;
